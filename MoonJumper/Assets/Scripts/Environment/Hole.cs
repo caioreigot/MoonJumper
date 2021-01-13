@@ -2,30 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hole : MonoBehaviour
-{
+public class Hole : MonoBehaviour {
 
     private SpriteRenderer playerSpriteRenderer;
     private CapsuleCollider2D playerCollider;
 
-    public bool died = false;
+    private GameController gameController;
 
     void Start() {
         playerSpriteRenderer = GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>();
         playerCollider = GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>();
+
+        gameController = FindObjectOfType<GameController>();
     }
     
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
+            gameController.playerDied = true;
             other.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
-            died = true;
         }
     }
 
     void Update() {
-        if (died) {
+        if (gameController.playerDied) {
             Color color = playerSpriteRenderer.color;
-            color.a = Mathf.Lerp(color.a, 0f, Time.deltaTime * 6); 
+            color.a = Mathf.Lerp(color.a, 0f, Time.deltaTime * 2); 
 
             playerSpriteRenderer.color = color;
 
@@ -34,8 +35,8 @@ public class Hole : MonoBehaviour
     }
 
     void Freeze() {
+        gameController.ShowGameOverCanvas();
         Time.timeScale = 0f;
     }
-
 
 }
