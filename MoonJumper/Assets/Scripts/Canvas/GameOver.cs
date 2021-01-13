@@ -11,7 +11,8 @@ public class GameOver : MonoBehaviour {
     void Start() {
         scoreText = score.GetComponent<Text>();
 
-        scoreText.text = FindObjectOfType<Score>()
+        scoreText.text = "SCORE: " +
+                         FindObjectOfType<Score>()
                          .GetScore()
                          .ToString();
     }

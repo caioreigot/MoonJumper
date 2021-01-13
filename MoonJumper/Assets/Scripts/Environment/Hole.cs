@@ -30,13 +30,12 @@ public class Hole : MonoBehaviour {
 
             playerSpriteRenderer.color = color;
 
-            Invoke("Freeze", 0.5f);
+            Invoke("ShowGameOverCanvas", 0.5f);
         }
     }
 
-    void Freeze() {
+    void ShowGameOverCanvas() {
         gameController.ShowGameOverCanvas();
-        Time.timeScale = 0f;
     }
 
 }
